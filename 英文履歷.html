@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danny Wang | Resume</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #2f6db3;
+      --text-color: #333;
+      --secondary-text: #666;
+      --bg-color: #f5f5f5;
+      --sidebar-bg: #f8f9fa;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      /* Prioritize English fonts, fallback to TC fonts */
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Noto Sans TC", "Microsoft JhengHei";
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+
+    /* A4 Paper Setup - General Class */
+    .page {
+      width: 210mm;
+      min-height: 296mm; /* A4 height */
+      margin: 20px auto;
+      background: white;
+      display: flex;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Left Sidebar */
+    .sidebar {
+      width: 30%;
+      background: var(--sidebar-bg);
+      padding: 40px 25px;
+      border-right: 1px solid #e0e0e0;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .photo-container {
+      width: 160px;
+      height: 160px;
+      margin: 0 auto 25px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      background-color: #ddd;
+    }
+
+    .photo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .sidebar h3 {
+      font-size: 16px;
+      color: var(--primary-color);
+      margin: 25px 0 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 5px;
+    }
+    
+    .sidebar h3:first-of-type {
+        margin-top: 10px;
+    }
+
+    .contact-info div {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+      font-size: 13px;
+      word-break: break-all; /* Prevent email overflow */
+    }
+
+    .contact-info i {
+      width: 20px;
+      color: var(--primary-color);
+      margin-right: 8px;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .skills-list, .edu-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .skills-list li {
+      background: #e9ecef;
+      padding: 4px 10px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* Main Content */
+    .main {
+      width: 70%;
+      padding: 40px 40px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      margin-bottom: 25px;
+    }
+
+    .name {
+      font-size: 36px;
+      font-weight: 700;
+      color: #222;
+      line-height: 1.2;
+    }
+
+    .title {
+      font-size: 18px;
+      color: var(--primary-color);
+      margin-top: 5px;
+      font-weight: 500;
+    }
+
+    .summary {
+      margin-top: 15px;
+      color: var(--secondary-text);
+      font-size: 14px;
+      text-align: justify;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #222;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 6px;
+      margin-bottom: 18px;
+      margin-top: 5px;
+    }
+
+    .job-item {
+      margin-bottom: 20px;
+    }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .job-company {
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .job-period {
+      font-size: 13px;
+      color: var(--secondary-text);
+      font-weight: 500;
+    }
+
+    .job-role {
+      font-size: 14px;
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .project-item {
+      margin-bottom: 12px;
+      padding-left: 10px;
+      border-left: 3px solid #e0e0e0;
+    }
+
+    .project-name {
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .project-name span {
+      background: #2f6db3;
+      color: white;
+      font-size: 11px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 8px;
+      white-space: nowrap;
+    }
+    
+    .rank-badge {
+      background: #2f6db3 !important;
+    }
+
+    .job-desc {
+      padding-left: 18px;
+      margin: 4px 0;
+    }
+
+    .job-desc li {
+      margin-bottom: 4px;
+      color: #444;
+    }
+
+    strong {
+      color: #000;
+      font-weight: 600;
+    }
+
+    /* Education Block Styles */
+    .edu-block {
+        margin-bottom: 15px;
+    }
+    .edu-school {
+        font-weight: bold; 
+        font-size: 15px; 
+        color: #222;
+    }
+    .edu-degree {
+        font-size: 13px; 
+        color: #666;
+    }
+
+    /* Print Styles */
+    @media print {
+      @page {
+        margin: 0;
+        size: auto;
+      }
+
+      body {
+        background: white;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        margin: 0;
+        padding: 0;
+      }
+
+      .page {
+        margin: 0 auto;
+        box-shadow: none;
+        width: 100%;
+        min-height: 100vh;
+        border: none;
+        page-break-after: always;
+      }
+      
+      .page:last-child {
+        page-break-after: auto;
+      }
+
+      .sidebar, .main {
+        padding-top: 20mm !important;
+        padding-bottom: 20mm !important;
+      }
+
+      .sidebar {
+        background-color: #f8f9fa !important;
+        min-height: 100vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Page 1: Work Experience -->
+<div class="page">
+  <!-- Sidebar P1 -->
+  <aside class="sidebar">
+    <div class="photo-container">
+      <img src="photo.jpg" alt="Danny Wang" onerror="this.src='https://via.placeholder.com/150?text=Photo'">
+    </div>
+
+    <div class="contact-info">
+      <h3>Contact</h3>
+      <div>
+        <i class="fas fa-envelope"></i>
+        <span>pangyenwang@gmail.com</span>
+      </div>
+      <div>
+        <i class="fab fa-github"></i>
+        <span>github.com/danny0926</span>
+      </div>
+      <div>
+        <i class="fab fa-linkedin"></i>
+        <span>linkedin.com/in/pang-yen-wang-a7a31b3b4</span>
+      </div>
+    </div>
+
+    <h3>Core Skills</h3>
+    <ul class="skills-list">
+      <li>Python / Manufacturing Data</li>
+      <li>Data Preprocessing & ETL</li>
+      <li>Machine Learning</li>
+      <li>Reinforcement Learning</li>
+      <li>Generative AI</li>
+    </ul>
+
+    <h3>Languages</h3>
+    <ul class="skills-list" style="background:none;">
+      <li style="background:none; padding:0;">Chinese (Native)</li>
+      <li style="background:none; padding:0;">Japanese (Professional)</li>
+      <li style="background:none; padding:0;">English (Intermediate)</li>
+    </ul>
+
+    <h3>Education</h3>
+    <div style="display: flex; flex-direction: column; gap: 15px;">
+        <div class="edu-block">
+          <div class="edu-school">National Yang Ming Chiao Tung University (NYCU)</div>
+          <div class="edu-degree">M.S. in Data Science and Engineering</div>
+        </div>
+        <div class="edu-block">
+          <div class="edu-school">National Cheng Kung University (NCKU)</div>
+          <div class="edu-degree">B.S. in Mathematics</div>
+        </div>
+    </div>
+  </aside>
+
+  <!-- Main Content P1 -->
+  <main class="main">
+    <header>
+      <div class="name">Danny Wang</div>
+      <div class="title">Semiconductor Software Engineer | Data Science & Automation</div>
+      <div class="summary">
+        Specializing in software solutions for semiconductor manufacturing. Experienced in implementing Machine Learning, Reinforcement Learning, and Rule-based algorithms in production lines. Skilled in handling large-scale cross-process data and proposing concrete alternative solutions to optimize operational costs and system stability.
+      </div>
+    </header>
+
+    <section>
+      <div class="section-title">Work Experience</div>
+
+      <!-- VIS -->
+      <div class="job-item">
+        <div class="job-header">
+          <div class="job-company">Vanguard International Semiconductor (VIS)</div>
+          <div class="job-period">2024 – Present</div>
+        </div>
+        <div class="job-role">Software Engineer</div>
+
+        <div class="project-item">
+          <div class="project-name">Wafer Map Defect Automatic Inspection System <span>Core Contributor</span></div>
+          <ul class="job-desc">
+            <li>
+              <strong>Strategic Adjustment:</strong> Evaluated and confirmed that the YOLO solution's accuracy was negatively impacted by the numerical-to-image conversion process. Advocated for and implemented a rollback to a Rule-based process to enhance system stability.
+            </li>
+            <li>
+              <strong>Mass Production Results:</strong> Successfully launched the system, achieving a <strong>99% interception rate</strong>. Realized fully automated inspection and significantly reduced the risk of missed detections.
+            </li>
+            <li>
+              <strong>Cross-domain Integration:</strong> Established a standardized interpretation process across different machines, processes, and factory sites to resolve consistency issues.
+            </li>
+          </ul>
+        </div>
+
+        <div class="project-item">
+          <div class="project-name">STDF Conversion System Alternative Assessment <span>Initiator</span></div>
+          <ul class="job-desc">
+            <li>
+              <strong>Cost Optimization:</strong> Initiated research on alternative solutions targeting annual maintenance costs of approximately <strong>6 million TWD</strong>.
+            </li>
+            <li>
+              <strong>System Verification:</strong> Verified data consistency between open-source solutions and the legacy system; currently conducting final confirmation of Edge Cases with Product Engineers (PE).
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Corning Taiwan -->
+      <div class="job-item">
+        <div class="job-header">
+          <div class="job-company">Corning Taiwan</div>
+          <div class="job-period">Summer Internship</div>
+        </div>
+        <div class="job-role">Manufacturing Digitalization Intern</div>
+        <ul class="job-desc">
+          <li>
+            <strong>Internal Tool Development:</strong> Built Python and database application systems from scratch to assist engineers in quickly locating production line issues. Continuously optimized functions through user interviews, significantly reducing data organization time.
+          </li>
+          <li>
+            <strong>Performance Recognition:</strong> Project results were verified for feasibility and won <strong>2nd Place</strong> in the intern competition.
+          </li>
+        </ul>
+      </div>
+
+      <!-- NYCU Industry-Academia -->
+      <div class="job-item" style="margin-bottom: 0;">
+        <div class="job-header">
+          <div class="job-company">National Yang Ming Chiao Tung University</div>
+          <div class="job-period">Industry-Academia Cooperation</div>
+        </div>
+        <div class="job-role">Reinforcement Learning Smart Scheduling Research</div>
+        <ul class="job-desc">
+          <li>
+            <strong>Algorithm Evaluation:</strong> Optimized Reinforcement Learning (RL) models using Graph Attention Networks (GAT).
+          </li>
+          <li>
+            <strong>Performance Optimization:</strong> Researched the application of RL methods to production line scheduling, comparing them with existing rule-based methods. Experiments showed that under multiple test scenarios, the new method reduced overall completion time by an average of <strong>20%</strong> and demonstrated superior stability under dynamic conditions.
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Page 2: Competitions & Education -->
+<div class="page">
+  <!-- Sidebar P2 -->
+  <aside class="sidebar">
+     <!-- Sidebar content continuation or empty for design -->
+  </aside>
+
+  <!-- Main Content P2 -->
+  <main class="main">
+    <section>
+      <div class="section-title" style="margin-top: 0;">Competitions</div>
+      
+      <!-- TSMC CareerHack -->
+      <div class="job-item">
+        <div class="job-header">
+          <div class="job-company">2024 TSMC IT CareerHack</div>
+          <div class="job-period">2024</div>
+        </div>
+        <div class="job-role">Team Member | Rank 4</div>
+
+        <div class="project-item">
+          <div class="project-name">GenAI Safety Image Recognition (Helmet Detection) <span class="rank-badge">4th Place</span></div>
+          <ul class="job-desc">
+            <li>
+              <strong>Data Augmentation Strategy:</strong> Applied diverse augmentation techniques to safety images to overcome dataset limitations and enhance model generalization across various lighting and angular scenarios.
+            </li>
+            <li>
+              <strong>Prompt Engineering:</strong> Enhanced Visual Question Answering (VQA) flexibility by training the model to adapt to diverse natural language queries via Question Augmentation.
+            </li>
+            <li>
+              <strong>Model Optimization Analysis:</strong> Designed and evaluated multiple Loss Functions for precision identification; conducted in-depth analysis of model convergence behavior under specific boundary conditions.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- AI CUP -->
+      <div class="job-item">
+        <div class="job-header">
+          <div class="job-company">AI CUP 2024 Spring: Image Generation Competition</div>
+          <div class="job-period">2024</div>
+        </div>
+        <div class="job-role">Team Leader | Rank 10</div>
+        
+        <div class="project-item">
+          <div class="project-name">UAV Navigation Info Construction via GenAI <span class="rank-badge">Private LB Rank 10</span></div>
+          <ul class="job-desc">
+            <li>
+              <strong>Model Architecture:</strong> Based on Pix2Pix (cGAN) architecture, combining a U-net generator and PatchGAN discriminator to achieve complex Edge-to-Photo image generation tasks.
+            </li>
+            <li>
+              <strong>Strategy Optimization:</strong> Designed separate training strategies for road and river feature differences; developed a custom boundary filling algorithm (Algorithm 2) to solve original label fragmentation issues, significantly improving model convergence.
+            </li>
+            <li>
+              <strong>Result:</strong> Achieved <strong>10th Place</strong> (Score: 111.1334) on the Private Leaderboard.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- T-Brain -->
+      <div class="job-item">
+        <div class="job-header">
+          <div class="job-company">T-Brain Machine Learning Real Estate Prediction</div>
+          <div class="job-period">Sep 2023 – Oct 2023</div>
+        </div>
+        <div class="job-role">Participant | Top 4%</div>
+
+        <div class="project-item">
+          <div class="project-name">Real Estate Price Prediction Model <span class="rank-badge">Top 4% Ranking</span></div>
+          <ul class="job-desc">
+            <li>
+              <strong>Model Integration:</strong> Applied multiple gradient boosting models like LightGBM and XGBoost, implementing Ensemble Learning via Weighted Average to effectively improve prediction robustness.
+            </li>
+            <li>
+              <strong>Feature Engineering:</strong> Conducted in-depth feature engineering and parameter tuning on real estate data, ultimately achieving a <strong>Top 4%</strong> ranking.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+</body>
+</html>

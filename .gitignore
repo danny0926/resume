@@ -1,4 +1,6 @@
 # Local files
+~$*
+*.log
 linkedin-profile-raw.html
 linkedin-profile-data.json
 linkedin-profile-clean.txt
