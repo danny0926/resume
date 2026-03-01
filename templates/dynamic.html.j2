@@ -1,0 +1,17 @@
+{% extends "base.html.j2" %}
+
+{% block extra_styles %}
+{{ css | default('') }}
+{% endblock %}
+
+{% block content %}
+{{ html | default('') }}
+{% endblock %}
+
+{% block shapes_script %}
+{{ shapes_js | default('') }}
+{% endblock %}
+
+{% block annotations_script %}
+{{ annotations_js | default('') }}
+{% endblock %}

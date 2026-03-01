@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="{{ lang | default('en') }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, height=1080">
+<title>{{ heading | default('Slide') }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&family=Kalam:wght@300;400;700&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rough-notation@0.5.1/lib/rough-notation.iife.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+  :root {
+    --accent: {{ accent | default('#1971c2') }};
+    --accent-light: {{ accent_light | default('#d0ebff') }};
+    --accent-dark: {{ accent_dark | default('#1864ab') }};
+    --bg: {{ bg | default('#fffdf7') }};
+    --text: {{ text | default('#1a1a2e') }};
+    --text-muted: {{ text_muted | default('#495057') }};
+    --font-heading: {{ font_heading | default("'Caveat', 'Noto Sans TC', cursive") }};
+    --font-body: {{ font_body | default("'Patrick Hand', 'Noto Sans TC', cursive") }};
+    --font-annotation: {{ font_annotation | default("'Kalam', 'Noto Sans TC', cursive") }};
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: var(--bg);
+    font-family: var(--font-body);
+    color: var(--text);
+    position: relative;
+  }
+
+  /* SVG overlay for rough.js shapes */
+  #rough-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 1920px;
+    height: 1080px;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Content layer */
+  #content {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    z-index: 1;
+    padding: 80px;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--text);
+  }
+
+  h1 { font-size: {{ h1_size | default('80px') }}; }
+  h2 { font-size: {{ h2_size | default('56px') }}; }
+  h3 { font-size: {{ h3_size | default('42px') }}; }
+
+  p, li, span {
+    font-family: var(--font-body);
+    font-size: {{ body_size | default('32px') }};
+    line-height: 1.5;
+  }
+
+  .annotation {
+    font-family: var(--font-annotation);
+    color: var(--text-muted);
+  }
+
+  .accent-text { color: var(--accent); }
+  .accent-bg { background: var(--accent-light); }
+
+  ul { list-style: none; }
+  ul li::before {
+    content: '\2022';
+    color: var(--accent);
+    font-size: 40px;
+    display: inline-block;
+    width: 40px;
+    vertical-align: middle;
+    margin-left: -40px;
+  }
+  ul li {
+    padding-left: 40px;
+    margin-bottom: 16px;
+    font-size: 34px;
+  }
+
+  {% block extra_styles %}{% endblock %}
+</style>
+</head>
+<body>
+<svg id="rough-layer" xmlns="http://www.w3.org/2000/svg"></svg>
+
+<div id="content">
+  {% block content %}{% endblock %}
+</div>
+
+<script>
+  // Style config from template context
+  const STYLE = {
+    roughness: {{ roughness | default(1.5) }},
+    strokeWidth: {{ stroke_width | default(2) }},
+    accent: '{{ accent | default("#1971c2") }}',
+    accentLight: '{{ accent_light | default("#d0ebff") }}',
+    text: '{{ text | default("#1a1a2e") }}',
+    textMuted: '{{ text_muted | default("#495057") }}',
+  };
+
+  // Initialize Mermaid with hand-drawn theme
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'default',
+    themeVariables: {
+      fontFamily: "{{ font_body | default("'Patrick Hand', 'Noto Sans TC', cursive") }}",
+      fontSize: '28px',
+      primaryColor: STYLE.accentLight,
+      primaryBorderColor: STYLE.accent,
+      primaryTextColor: STYLE.text,
+      lineColor: STYLE.accent,
+      secondaryColor: '#f1f3f5',
+      tertiaryColor: '#fff9db',
+      nodeTextSize: '28px',
+    },
+    flowchart: { curve: 'basis', useMaxWidth: true, padding: 24, nodeSpacing: 60, rankSpacing: 80 },
+    sequence: { useMaxWidth: true, actorFontSize: 28, messageFontSize: 24 },
+  });
+
+  const rc = rough.svg(document.getElementById('rough-layer'));
+  const roughLayer = document.getElementById('rough-layer');
+
+  function addShape(svgNode) {
+    roughLayer.appendChild(svgNode);
+  }
+
+  function drawRect(x, y, w, h, opts = {}) {
+    const defaults = { stroke: STYLE.accent, strokeWidth: STYLE.strokeWidth, roughness: STYLE.roughness, fill: 'transparent' };
+    addShape(rc.rectangle(x, y, w, h, { ...defaults, ...opts }));
+  }
+
+  function drawEllipse(cx, cy, w, h, opts = {}) {
+    const defaults = { stroke: STYLE.accent, strokeWidth: STYLE.strokeWidth, roughness: STYLE.roughness, fill: 'transparent' };
+    addShape(rc.ellipse(cx, cy, w, h, { ...defaults, ...opts }));
+  }
+
+  function drawLine(x1, y1, x2, y2, opts = {}) {
+    const defaults = { stroke: STYLE.accent, strokeWidth: STYLE.strokeWidth, roughness: STYLE.roughness };
+    addShape(rc.line(x1, y1, x2, y2, { ...defaults, ...opts }));
+  }
+
+  function drawCircle(cx, cy, d, opts = {}) {
+    const defaults = { stroke: STYLE.accent, strokeWidth: STYLE.strokeWidth, roughness: STYLE.roughness, fill: 'transparent' };
+    addShape(rc.circle(cx, cy, d, { ...defaults, ...opts }));
+  }
+
+  function annotateElement(id, opts = {}) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const defaults = { type: 'underline', color: STYLE.accent, strokeWidth: 3, animationDuration: 0 };
+    const annotation = RoughNotation.annotate(el, { ...defaults, ...opts });
+    annotation.show();
+  }
+
+  // Wait for fonts then run shape scripts
+  document.fonts.ready.then(() => {
+    {% block shapes_script %}{% endblock %}
+    {% block annotations_script %}{% endblock %}
+  });
+</script>
+</body>
+</html>

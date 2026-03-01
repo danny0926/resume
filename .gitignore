@@ -1,15 +1,13 @@
-# Local files
-~$*
-*.log
-linkedin-profile-raw.html
-linkedin-profile-data.json
-linkedin-profile-clean.txt
-linkedin-profile-text.txt
-extract_linkedin.py
-*.pdf
-bk/
-.claude/
-resumes/
+# Generated files
 slides_tmp/
-slides_*_test/
-linkedin-*.md
+*.pptx
+*.pdf
+*.log
+
+# OS / Editor
+~$*
+__pycache__/
+*.pyc
+
+# Claude Code local config
+.claude/
