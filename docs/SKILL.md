@@ -274,6 +274,43 @@ Elements are native PPTX shapes placed on top of the background PNG. Coordinates
 - `icon`: optional emoji rendered large above the label text (e.g., "📷", "📊")
 - `label_color`: optional hex for label text color (default "#868e96")
 
+### Image Placeholder Label as Prompt
+
+When `src` is null, the `label` text appears inside the placeholder box. **Write the label as a ready-to-use image generation prompt** so the user can copy-paste it directly into any AI image tool (Gemini, DALL-E, Midjourney, etc.).
+
+**Rules for writing label prompts:**
+1. **Describe the visual**, not the concept — "A funnel diagram with 3 layers narrowing from top to bottom" not "[Insert funnel diagram]"
+2. **Include style cues** — add "sketch style", "hand-drawn", "white background", "minimal flat illustration" to match presentation aesthetics
+3. **Be specific** — mention colors, composition, key elements. "Two side-by-side bar charts comparing before (red) and after (green) metrics" not "[Insert comparison chart]"
+4. **Keep under 30 words** — prompt must fit legibly inside the placeholder box
+5. **Match slide context** — the prompt should describe an image that reinforces the slide's message
+
+**Bad examples (vague, not usable as prompts):**
+```
+"[Insert diagram here]"
+"[Add relevant image]"
+"[Experiment results]"
+```
+
+**Good examples (copy-paste ready):**
+```
+"Hand-drawn funnel: raw data → filtering → clean insights, sketch style, white background"
+"Minimal illustration of a neural network with 3 layers, hand-drawn style, blue and orange nodes"
+"Before/after comparison: messy desk vs organized desk, sketch style, split view"
+"Simple cycle diagram: collect → analyze → act → repeat, circular arrows, pastel colors"
+"Isometric server rack with data flowing to cloud, line art, minimal color"
+```
+
+**Icon selection guide** — match the icon emoji to the image content:
+| Content Type | Icon |
+|-------------|------|
+| Photo/screenshot | 📷 |
+| Chart/graph | 📊 |
+| Diagram/architecture | 🔧 |
+| Concept/abstract | 🎨 |
+| Data/table | 📋 |
+| Person/team | 👤 |
+
 ### Design Principles
 
 1. **1 slide = 1 message**: Each slide conveys exactly one idea
